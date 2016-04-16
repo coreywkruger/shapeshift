@@ -4,11 +4,16 @@
 init();
 animate();
 
-var sce;
+var sce, car;
       
 function init() { 
   sce = new GameScene();
   sce.Initialize();
+
+  car = new GameEntity();
+  car.Initialize(_createCar("blah"));
+  sce.addObject(car.getEntity());
+
   $('#ThreeJS').append(sce.getElement());
 }
 
