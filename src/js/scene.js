@@ -23,7 +23,7 @@ function GameScene() {
     return mainCamera;
   };
 
-  this.addObject = function(obj) {
+  this.addObjectToScene = function(obj) {
     mainScene.add(obj);
   };
 

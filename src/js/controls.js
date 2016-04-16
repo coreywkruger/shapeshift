@@ -6,7 +6,6 @@ function GameControls() {
   var active = false;
 
   this.createAction = function(key, cb) {
-    console.log('adding', key);
     actions[key] = cb;
   };
 

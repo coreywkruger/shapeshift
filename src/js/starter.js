@@ -8,14 +8,13 @@ function init() {
   sce = new GameScene();
   sce.Initialize();
 
-  // create a game entity
-  car = new GameEntity();
   // initialize with a car object
-  car.Initialize(_createCar("blah"));
-  var carCam = sce._createCamera(75, 16 / 9, 1, 1000000);
+  car = _create_car();
+  var carCam = new GameEntity().Initialize(sce._createCamera(75, 16 / 9, 1, 1000000), 'cam_1');
   car.addChild(carCam);
-  sce.addObject(car.getEntity());
-  sce.setActiveCamera(carCam);
+
+  sce.addObjectToScene(car.getEntity());
+  sce.setActiveCamera(carCam.getEntity());
 
   // handle controls
   controls = new GameControls();
