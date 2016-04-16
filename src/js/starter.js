@@ -20,7 +20,7 @@ function animate() {
 
 function update() {
   // delta = change in time since last call (in seconds)
-  var delta = clock.getDelta(); 
+  // var delta = clock.getDelta(); 
 }
 
 function render() { 

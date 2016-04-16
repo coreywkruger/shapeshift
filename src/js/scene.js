@@ -2,12 +2,11 @@ function GameScene() {
 
   var mainRenderer;
   var mainScene;
+  var mainCamera;
 
   this.Initialize = function(force, from) {
     mainScene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(75, 16 / 9, 1, 1000000);
-    this.camera.position.y = 9000;
-    this.camera.position.z = 23000;
+    mainCamera = createCamera(75, 16 / 9, 1, 1000000);
 
     var gridHelper = new THREE.GridHelper(10000000, 10000);
     gridHelper.position.y = -5000;
@@ -19,14 +18,13 @@ function GameScene() {
     return mainScene;
   };
 
+  this.setActiveCamera = function(cam){
+    mainCamera = cam;
+    return mainCamera;
+  };
+
   this.addObject = function(obj) {
-    if (obj instanceof Array) {
-      for (var i = 0; i < obj.length; i++) {
-        mainScene.add(obj[i]);
-      }
-    } else {
-      mainScene.add(obj);
-    }
+    mainScene.add(obj);
   };
 
   this.deleteObject = function(id) {
@@ -48,7 +46,7 @@ function GameScene() {
   };
 
   this.render = function() {
-    mainRenderer.render(mainScene, this.camera);
+    mainRenderer.render(mainScene, mainCamera);
   };
 };
 
@@ -62,4 +60,11 @@ function createRenderer(width, height, aspect) {
   renderer.setClearColor(0x000000);
   renderer.setClear = true;
   return renderer;
+};
+
+function createCamera(fov, aspect, near, far){
+  var camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+  camera.position.y = 9000;
+  camera.position.z = 23000;
+  return camera;
 };
