@@ -6,12 +6,12 @@ function GameScene() {
 
   this.Initialize = function(force, from) {
     mainScene = new THREE.Scene();
-    mainCamera = createCamera(75, 16 / 9, 1, 1000000);
+    mainCamera = _createCamera(75, 16 / 9, 1, 1000000);
 
     var gridHelper = new THREE.GridHelper(10000000, 10000);
     gridHelper.position.y = -5000;
     mainScene.add(gridHelper);
-    mainRenderer = createRenderer(1000, 1000, 9/16);
+    mainRenderer = _createRenderer(1000, 1000, 9/16);
   };
 
   this.getScene = function() {
@@ -50,7 +50,7 @@ function GameScene() {
   };
 };
 
-function createRenderer(width, height, aspect) {
+function _createRenderer(width, height, aspect) {
   var renderer = new THREE.WebGLRenderer({
     antialias: true,
     autoClear: true,
@@ -62,7 +62,7 @@ function createRenderer(width, height, aspect) {
   return renderer;
 };
 
-function createCamera(fov, aspect, near, far){
+function _createCamera(fov, aspect, near, far){
   var camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
   camera.position.y = 9000;
   camera.position.z = 23000;
