@@ -6,7 +6,7 @@ function GameScene() {
 
   this.Initialize = function(force, from) {
     mainScene = new THREE.Scene();
-    mainCamera = _createCamera(75, 16 / 9, 1, 1000000);
+    mainCamera = this._createCamera(75, 16 / 9, 1, 1000000);
 
     var gridHelper = new THREE.GridHelper(10000000, 10000);
     gridHelper.position.y = -5000;
@@ -48,6 +48,13 @@ function GameScene() {
   this.render = function() {
     mainRenderer.render(mainScene, mainCamera);
   };
+
+  this._createCamera = function(fov, aspect, near, far){
+    var camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+    camera.position.y = 9000;
+    camera.position.z = 23000;
+    return camera;
+  };
 };
 
 function _createRenderer(width, height, aspect) {
@@ -60,11 +67,4 @@ function _createRenderer(width, height, aspect) {
   renderer.setClearColor(0x000000);
   renderer.setClear = true;
   return renderer;
-};
-
-function _createCamera(fov, aspect, near, far){
-  var camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-  camera.position.y = 9000;
-  camera.position.z = 23000;
-  return camera;
 };

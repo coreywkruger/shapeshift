@@ -22,22 +22,22 @@ function GameEntity() {
     return entity;
   };
 
-  this.rotate_left = function() {
+  this.rotateLeft = function() {
     entity.rotation.y += Math.PI / 460;
   };
 
-  this.rotate_right = function() {
+  this.rotateRight = function() {
     entity.rotation.y -= Math.PI / 460;
   };
 
-  this.move_forward = function() {
+  this.moveForward = function() {
     entity.updateWheels(1);
     var els = entity.matrix.elements;
     var v = new THREE.Vector3(els[8], els[9], els[10]);
     entity.position.add(v.clone().setLength(-300));
   };
 
-  this.move_backward = function() {
+  this.moveBackward = function() {
     entity.updateWheels(-1);
     var els = entity.matrix.elements;
     var v = new THREE.Vector3(els[8], els[9], els[10]);
@@ -69,16 +69,6 @@ function _createCar(id) {
   });
 
   var cube = new THREE.Object3D();
-
-  // var idGeometry = new THREE.TextGeometry("..." + id.slice(-7), {
-  //   font: "helvetiker",
-  //   size: 2000
-  // }); //new THREE.BoxGeometry( 10000, 10000, 10000 );
-  // idGeometry.computeBoundingSphere();
-  // var offset = idGeometry.boundingSphere.radius / 1;
-  // idGeometry.applyMatrix(new THREE.Matrix4().makeTranslation(-offset, 5000, 0));
-  // var idObj = new THREE.Mesh(idGeometry, blueMat);
-  // cube.add(idObj);
 
   var bodyGeometry = new THREE.BoxGeometry(4500, 4500, 15000);
   // bodyGeometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0, 0));
