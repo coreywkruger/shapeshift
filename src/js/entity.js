@@ -1,14 +1,12 @@
-
 function GameEntity() {
 
   var self = this;
   var mesh;
-  var behaviors = {};
-  var components = {};
 
   this.name = null;
+  this.components = {};
 
-  this.Initialize = function(threejs_object, name){
+  this.Initialize = function(threejs_object, name){    
     mesh = threejs_object;
     self.name = name;
     return self;
@@ -50,72 +48,36 @@ function GameEntity() {
 
   this.rotateLeft = function() {
     mesh.rotation.y += Math.PI / 460;
-
-    executeBehavior('rotate_left');
   };
 
   this.rotateRight = function() {
     mesh.rotation.y -= Math.PI / 460;
-
-    executeBehavior('rotate_right');
   };
 
   this.moveForward = function() {
     var els = mesh.matrix.elements;
     var v = new THREE.Vector3(els[8], els[9], els[10]);
     mesh.position.add(v.clone().setLength(-300));
-
-    executeBehavior('move_forward');
   };
 
   this.moveBackward = function() {
     var els = mesh.matrix.elements;
     var v = new THREE.Vector3(els[8], els[9], els[10]);
     mesh.position.add(v.clone().setLength(300));
-
-    executeBehavior('move_backward');
   };
 
-  this.getEntity = function(){
+  this.getChild = function(name){
+    return self.components[name];
+  };
+
+  this.getMesh = function(){
     return mesh;
   };
 
   this.addChild = function(child){
-    mesh.add(child.getEntity());
-    components[child.name] = child;
+    mesh.add(child.getMesh());
+    self.components[child.name] = child;
   };
-
-  this.createBehavior = function(key, action){
-    behaviors[key] = action;
-  };
-
-  function executeBehavior(key){
-    if(behaviors[key] && typeof behaviors[key] === 'function'){
-      behaviors[key]();
-    }
-  };
-}
-
-function _create_cab(name){
-  var greenMat = new THREE.MeshBasicMaterial({
-    color: 0x00ff00,
-    wireframe: true
-  });
-  var geometry = new THREE.BoxGeometry(4500, 4500, 15000);
-  var mesh = new THREE.Mesh(geometry, greenMat);
-  var cab = new GameEntity();
-  return cab.Initialize(mesh, name);
-}
-
-function _create_wheel(name){
-  var mat = new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    wireframe: true
-  });
-  var geometry = new THREE.CylinderGeometry(3000, 3000, 2000, 16);
-  var mesh = new THREE.Mesh(geometry, mat);
-  var wheel = new GameEntity();
-  return wheel.Initialize(mesh, name);
 }
 
 function _create_car() {
@@ -123,7 +85,6 @@ function _create_car() {
   var cab = _create_cab('cab_1');
 
   var rear_left = _create_wheel('rear_left');
-  
   rear_left.translateObject(-5000, -5000, -9000);
   rear_left.setRotationZ(Math.PI / 2);
   cab.addChild(rear_left);
@@ -147,4 +108,26 @@ function _create_car() {
   cab.setPositionZ(2000);
 
   return cab;
-};
+}
+
+function _create_cab(name){
+  var greenMat = new THREE.MeshBasicMaterial({
+    color: 0x00ff00,
+    wireframe: true
+  });
+  var geometry = new THREE.BoxGeometry(4500, 4500, 15000);
+  var mesh = new THREE.Mesh(geometry, greenMat);
+  var cab = new GameEntity();
+  return cab.Initialize(mesh, name);
+}
+
+function _create_wheel(name){
+  var mat = new THREE.MeshBasicMaterial({
+    color: 0xff0000,
+    wireframe: true
+  });
+  var geometry = new THREE.CylinderGeometry(3000, 3000, 2000, 16);
+  var mesh = new THREE.Mesh(geometry, mat);
+  var wheel = new GameEntity();
+  return wheel.Initialize(mesh, name);
+}

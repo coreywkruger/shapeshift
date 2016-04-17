@@ -18,26 +18,26 @@ function GameControls() {
 
     $(window).on('keyup', function(event, a, b) {
       keyCodes[event.keyCode] = (event.type == 'keydown');
-      if (self._is_empty()) {
+      if (_is_empty()) {
         active = false;
       }
     });
 
     setInterval(function() {
       if (active) {
-        self._exec_funs();
+        _exec_funs();
       }
     }, 1);
   };
 
-  this._is_empty = function() {
+  function _is_empty() {
     for (var key in keyCodes) {
       if (keyCodes[key]) return false;
     }
     return true;
   };
 
-  this._exec_funs = function() {
+  function _exec_funs() {
     for (var key in keyCodes) {
       if (keyCodes[key]) {
         if (actions[key]) {
