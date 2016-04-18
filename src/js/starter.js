@@ -20,25 +20,17 @@ function init() {
   controls = new GameControls();
   controls.createAction('87', function(){
     car.moveForward();
-    var fr = car.getChild('front_right');
-    fr.setRotationX(fr.getMesh().rotation.x - 0.01);
-    var fl = car.getChild('front_left');
-    fl.setRotationX(fl.getMesh().rotation.x - 0.01);
-    var rr = car.getChild('rear_right');
-    rr.setRotationX(rr.getMesh().rotation.x - 0.01);
-    var rl = car.getChild('rear_left');
-    rl.setRotationX(rl.getMesh().rotation.x - 0.01);
+    var fr = car.getChild('front_right').rotateX(-0.01);
+    var fl = car.getChild('front_left').rotateX(-0.01);
+    var rr = car.getChild('rear_right').rotateX(-0.01);
+    var rl = car.getChild('rear_left').rotateX(-0.01);
   });
   controls.createAction('83', function(){
     car.moveBackward();
-    var fr = car.getChild('front_right');
-    fr.setRotationX(fr.getMesh().rotation.x + 0.01);
-    var fl = car.getChild('front_left');
-    fl.setRotationX(fl.getMesh().rotation.x + 0.01);
-    var rr = car.getChild('rear_right');
-    rr.setRotationX(rr.getMesh().rotation.x + 0.01);
-    var rl = car.getChild('rear_left');
-    rl.setRotationX(rl.getMesh().rotation.x + 0.01);
+    var fr = car.getChild('front_right').rotateX(0.01);
+    var fl = car.getChild('front_left').rotateX(0.01);
+    var rr = car.getChild('rear_right').rotateX(0.01);
+    var rl = car.getChild('rear_left').rotateX(0.01);
   });
   controls.createAction('65', function(){
     car.rotateLeft();

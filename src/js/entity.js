@@ -1,106 +1,136 @@
 function GameEntity() {
 
-  var self = this;
-  var mesh;
-
+  this.mesh;
   this.name = null;
   this.components = {};
-
-  this.Initialize = function(threejs_object, name){    
-    mesh = threejs_object;
-    self.name = name;
-    return self;
-  };
-
-  this.translateObject = function(x, y, z) {
-    self.setPositionX(x);
-    self.setPositionY(y);
-    self.setPositionZ(z);
-    return mesh;
-  };
-
-  this.setPositionX = function(x){
-    mesh.position.x = x ? x : mesh.position.x;
-  };
-  this.setPositionZ = function(z){
-    mesh.position.z = z ? z : mesh.position.z;
-  };
-  this.setPositionY = function(y){
-    mesh.position.y = y ? y : mesh.position.y;
-  };
-
-  this.rotateObject = function(x, y, z) {
-    self.setRotationX(x);
-    self.setRotationY(y);
-    self.setRotationZ(z);
-    return mesh;
-  };
-
-  this.setRotationX = function(x){
-    mesh.rotation.x = x ? x : mesh.rotation.x;
-  };
-  this.setRotationZ = function(z){
-    mesh.rotation.z = z ? z : mesh.rotation.z;
-  };
-  this.setRotationY = function(y){
-    mesh.rotation.y = y ? y : mesh.rotation.y;
-  };
-
-  this.rotateLeft = function() {
-    mesh.rotation.y += Math.PI / 460;
-  };
-
-  this.rotateRight = function() {
-    mesh.rotation.y -= Math.PI / 460;
-  };
-
-  this.moveForward = function() {
-    var els = mesh.matrix.elements;
-    var v = new THREE.Vector3(els[8], els[9], els[10]);
-    mesh.position.add(v.clone().setLength(-300));
-  };
-
-  this.moveBackward = function() {
-    var els = mesh.matrix.elements;
-    var v = new THREE.Vector3(els[8], els[9], els[10]);
-    mesh.position.add(v.clone().setLength(300));
-  };
-
-  this.getChild = function(name){
-    return self.components[name];
-  };
-
-  this.getMesh = function(){
-    return mesh;
-  };
-
-  this.addChild = function(child){
-    mesh.add(child.getMesh());
-    self.components[child.name] = child;
-  };
 }
+
+GameEntity.prototype.Initialize = function(threejs_object, name){    
+  this.mesh = threejs_object;
+  this.name = name;
+  return this;
+};
+
+GameEntity.prototype.translate = function(x, y, z){
+  this.translateX(x);
+  this.translateY(y);
+  this.translateZ(z);
+  return this.mesh;
+};
+GameEntity.prototype.translateX = function(x){
+  this.setPositionX(this.getMesh().position.x + x);
+};
+GameEntity.prototype.translateY = function(y){
+  this.setPositionY(this.getMesh().position.y + y);
+};
+GameEntity.prototype.translateZ = function(z){
+  this.setPositionZ(this.getMesh().position.z + z);
+};
+
+GameEntity.prototype.setPosition = function(x, y, z) {
+  this.setPositionX(x);
+  this.setPositionY(y);
+  this.setPositionZ(z);
+  return this.mesh;
+};
+
+GameEntity.prototype.setPositionX = function(x){
+  this.mesh.position.x = x ? x : this.mesh.position.x;
+};
+GameEntity.prototype.setPositionZ = function(z){
+  this.mesh.position.z = z ? z : this.mesh.position.z;
+};
+GameEntity.prototype.setPositionY = function(y){
+  this.mesh.position.y = y ? y : this.mesh.position.y;
+};
+
+GameEntity.prototype.setRotation = function(x, y, z) {
+  this.setRotationX(x);
+  this.setRotationY(y);
+  this.setRotationZ(z);
+  return this.mesh;
+};
+
+GameEntity.prototype.rotate = function(x, y, z){
+  this.rotateX(x);
+  this.rotateY(y);
+  this.rotateZ(z);
+  return this.mesh;
+};
+GameEntity.prototype.rotateX = function(x){
+  this.setRotationX(this.getMesh().rotation.x + x);
+};
+GameEntity.prototype.rotateY = function(y){
+  this.setRotationY(this.getMesh().rotation.y + y);
+};
+GameEntity.prototype.rotateZ = function(z){
+  this.setRotationZ(this.getMesh().rotation.z + z);
+};
+
+GameEntity.prototype.setRotationX = function(x){
+  this.mesh.rotation.x = x ? x : this.mesh.rotation.x;
+};
+GameEntity.prototype.setRotationZ = function(z){
+  this.mesh.rotation.z = z ? z : this.mesh.rotation.z;
+};
+GameEntity.prototype.setRotationY = function(y){
+  this.mesh.rotation.y = y ? y : this.mesh.rotation.y;
+};
+
+GameEntity.prototype.rotateLeft = function() {
+  this.mesh.rotation.y += Math.PI / 460;
+};
+
+GameEntity.prototype.rotateRight = function() {
+  this.mesh.rotation.y -= Math.PI / 460;
+};
+
+GameEntity.prototype.moveForward = function() {
+  var els = this.mesh.matrix.elements;
+  var v = new THREE.Vector3(els[8], els[9], els[10]);
+  this.mesh.position.add(v.clone().setLength(-300));
+};
+
+GameEntity.prototype.moveBackward = function() {
+  var els = this.mesh.matrix.elements;
+  var v = new THREE.Vector3(els[8], els[9], els[10]);
+  this.mesh.position.add(v.clone().setLength(300));
+};
+
+GameEntity.prototype.getChild = function(name){
+  return this.components[name];
+};
+
+GameEntity.prototype.getMesh = function(){
+  return this.mesh;
+};
+
+GameEntity.prototype.addChild = function(child){
+  this.mesh.add(child.getMesh());
+  this.components[child.name] = child;
+};
 
 function _create_car() {
 
-  var cab = _create_cab('cab_1');
+  var cab = _create_cab_mesh('cab_1');
 
   var rear_left = _create_wheel('rear_left');
-  rear_left.translateObject(-5000, -5000, -9000);
+  rear_left.setPosition(-5000, -5000, -9000);
   rear_left.setRotationZ(Math.PI / 2);
   cab.addChild(rear_left);
 
   var rear_right = _create_wheel('rear_right');
-  rear_right.translateObject(5000, -5000, -9000);
+  rear_right.setPosition(5000, -5000, -9000);
   rear_right.setRotationZ(Math.PI / 2);
   cab.addChild(rear_right);
 
   var front_left = _create_wheel('front_left');
-  front_left.translateObject(-5000, -5000, -1000);
+  front_left.setPosition(-5000, -5000, -1000);
   front_left.setRotationZ(Math.PI / 2);
   cab.addChild(front_left);
 
   var front_right = _create_wheel('front_right');
-  front_right.translateObject(5000, -5000, -1000);
+  front_right.setPosition(5000, -5000, -1000);
   front_right.setRotationZ(Math.PI / 2);
   cab.addChild(front_right);
 
@@ -110,7 +140,7 @@ function _create_car() {
   return cab;
 }
 
-function _create_cab(name){
+function _create_cab_mesh(name){
   var greenMat = new THREE.MeshBasicMaterial({
     color: 0x00ff00,
     wireframe: true
