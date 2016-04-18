@@ -1,5 +1,4 @@
 function GameEntity() {
-
   this.mesh;
   this.name = null;
   this.components = {};

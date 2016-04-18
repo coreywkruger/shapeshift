@@ -20,17 +20,17 @@ function init() {
   controls = new GameControls();
   controls.createAction('87', function(){
     car.moveForward();
-    var fr = car.getChild('front_right').rotateX(-0.01);
-    var fl = car.getChild('front_left').rotateX(-0.01);
-    var rr = car.getChild('rear_right').rotateX(-0.01);
-    var rl = car.getChild('rear_left').rotateX(-0.01);
+    car.getChild('front_right').rotateX(-0.01);
+    car.getChild('front_left').rotateX(-0.01);
+    car.getChild('rear_right').rotateX(-0.01);
+    car.getChild('rear_left').rotateX(-0.01);
   });
   controls.createAction('83', function(){
     car.moveBackward();
-    var fr = car.getChild('front_right').rotateX(0.01);
-    var fl = car.getChild('front_left').rotateX(0.01);
-    var rr = car.getChild('rear_right').rotateX(0.01);
-    var rl = car.getChild('rear_left').rotateX(0.01);
+    car.getChild('front_right').rotateX(0.01);
+    car.getChild('front_left').rotateX(0.01);
+    car.getChild('rear_right').rotateX(0.01);
+    car.getChild('rear_left').rotateX(0.01);
   });
   controls.createAction('65', function(){
     car.rotateLeft();
