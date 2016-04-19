@@ -17,7 +17,7 @@ function init() {
   sce.setActiveCamera(carCam.getMesh());
 
   // handle controls
-  controls = new GameControls();
+  var controls = new GameControls();
   controls.createAction('87', function(){
     car.moveForward();
     car.getChild('front_right').rotateX(-0.01);

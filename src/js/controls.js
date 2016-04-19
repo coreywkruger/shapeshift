@@ -1,49 +1,40 @@
 function GameControls() {
+  this.actions = {};
+  this.keyCodes = {};
+  this.active = false;
+  this._loop = null;
+}
 
-  var self = this;
-  var actions = {};
-  var keyCodes = {};
-  var active = false;
+GameControls.prototype.createAction = function(key, cb) {
+  this.actions[key] = cb;
+};
 
-  this.createAction = function(key, cb) {
-    actions[key] = cb;
-  };
+GameControls.prototype.startControls = function() {
 
-  this.startControls = function() {
+  $(window).on('keydown', function(event) {
+    this.keyCodes[event.keyCode] = (event.type == 'keydown');
+    this.active = true;
+  }.bind(this));
 
-    $(window).on('keydown', function(event) {
-      keyCodes[event.keyCode] = (event.type == 'keydown');
-      active = true;
-    });
-
-    $(window).on('keyup', function(event, a, b) {
-      keyCodes[event.keyCode] = (event.type == 'keydown');
-      if (_is_empty()) {
-        active = false;
-      }
-    });
-
-    setInterval(function() {
-      if (active) {
-        _exec_funs();
-      }
-    }, 1);
-  };
-
-  function _is_empty() {
-    for (var key in keyCodes) {
-      if (keyCodes[key]) return false;
+  $(window).on('keyup', function(event) {
+    this.keyCodes[event.keyCode] = (event.type == 'keydown');
+    for(var key in this.keyCodes){
+      if(this.keyCodes[key]) return;
     }
-    return true;
-  };
+    this.active = false;
+  }.bind(this));
 
-  function _exec_funs() {
-    for (var key in keyCodes) {
-      if (keyCodes[key]) {
-        if (actions[key]) {
-          actions[key]();
+  this._loop = setInterval(function() {
+    if (this.active) {
+      for (var key in this.keyCodes) {
+        if (this.keyCodes[key] && this.actions[key]) {
+          this.actions[key]();
         }
       }
     }
-  };
-}
+  }.bind(this), 1);
+};
+
+GameControls.prototype.kill = function(){
+  window.clearInterval(this._loop);
+};
