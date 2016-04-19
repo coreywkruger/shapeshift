@@ -19,12 +19,12 @@ function GameScene() {
   };
 
   this.setActiveCamera = function(cam){
-    mainCamera = cam;
+    mainCamera = cam.getMesh();
     return mainCamera;
   };
 
   this.addObjectToScene = function(obj) {
-    mainScene.add(obj);
+    mainScene.add(obj.getMesh());
   };
 
   this.deleteObject = function(id) {

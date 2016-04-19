@@ -1,20 +1,17 @@
 init();
 animate();
-
-var sce, car;
       
 function init() { 
   // make scene
-  sce = new GameScene();
+  var sce = new GameScene();
   sce.Initialize();
 
   // initialize with a car object
-  car = _create_car();
+  var car = _create_car();
   var carCam = new GameEntity().Initialize(sce._createCamera(95, 16 / 9, 1, 1000000), 'cam_1');
   car.addChild(carCam);
-
-  sce.addObjectToScene(car.getMesh());
-  sce.setActiveCamera(carCam.getMesh());
+  sce.addObjectToScene(car);
+  sce.setActiveCamera(carCam);
 
   // handle controls
   var controls = new GameControls();
@@ -44,7 +41,7 @@ function init() {
 }
 
 function animate() {
-  requestAnimationFrame( animate );
+  requestAnimationFrame(animate);
   render();   
   update();
 }
