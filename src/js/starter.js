@@ -1,9 +1,11 @@
 init();
 animate();
-      
+    
+var sce;
+
 function init() { 
   // make scene
-  var sce = new GameScene();
+  sce = new GameScene();
   sce.Initialize();
 
   // initialize with a car object
@@ -36,8 +38,18 @@ function init() {
     car.rotateRight();
   });
   controls.startControls();
-
   $('#ThreeJS').append(sce.getElement());
+
+  var ws = new GameWebsocket('ws://localhost:3334/register');
+  // ws.Init();
+  console.log(ws);
+  setTimeout(function(){
+    ws.sendMessage({
+      'message': 'hello world'
+    });
+  }, 2000);
+
+  
 }
 
 function animate() {
