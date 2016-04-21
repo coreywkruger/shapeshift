@@ -1,5 +1,4 @@
 function GameWebsocket(host){
-  console.log(host);
   this.ws = new WebSocket(host);
   this.ws.onopen = function() {
     if (this.ws.bufferedAmount == 0) {
@@ -7,6 +6,10 @@ function GameWebsocket(host){
         message: 'connected'
       });
     }
+  }.bind(this);
+  this.ws.onmessage = function(event) {
+    var message = JSON.parse(event.data);
+    console.log('received message: ', message);
   }.bind(this);
 }
 

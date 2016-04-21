@@ -23,6 +23,10 @@ function init() {
     car.getChild('front_left').rotateX(-0.01);
     car.getChild('rear_right').rotateX(-0.01);
     car.getChild('rear_left').rotateX(-0.01);
+
+    // ws.sendMessage({
+    //   'message': 'going....'
+    // });
   });
   controls.createAction('83', function(){
     car.moveBackward();
@@ -41,15 +45,6 @@ function init() {
   $('#ThreeJS').append(sce.getElement());
 
   var ws = new GameWebsocket('ws://localhost:3334/register');
-  // ws.Init();
-  console.log(ws);
-  setTimeout(function(){
-    ws.sendMessage({
-      'message': 'hello world'
-    });
-  }, 2000);
-
-  
 }
 
 function animate() {
