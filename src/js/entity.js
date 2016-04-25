@@ -109,9 +109,9 @@ GameEntity.prototype.addChild = function(child){
   this.components[child.name] = child;
 };
 
-function _create_car() {
+function _create_car(id) {
 
-  var cab = _create_cab_mesh('cab_1');
+  var cab = _create_cab_mesh(id);
 
   var rear_left = _create_wheel('rear_left');
   rear_left.setPosition(-5000, -5000, -9000);
@@ -146,6 +146,7 @@ function _create_cab_mesh(name){
   });
   var geometry = new THREE.BoxGeometry(4500, 4500, 15000);
   var mesh = new THREE.Mesh(geometry, greenMat);
+  mesh.name = name;
   var cab = new GameEntity();
   return cab.Initialize(mesh, name);
 }

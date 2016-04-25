@@ -28,14 +28,13 @@ function GameScene() {
   };
 
   this.deleteObject = function(id) {
-    mainScene.remove(
-      this.getObject(id)
-    );
+    var ob = this.getObject(id);
+    mainScene.remove(ob);
   };
 
   this.getObject = function(id) {
     for (var i = 0; i < mainScene.children.length; i++) {
-      if (mainScene.children[i].game_id == id) {
+      if (mainScene.children[i].name == id) {
         return mainScene.children[i];
       }
     }

@@ -1,15 +1,15 @@
-function GameControls() {
+function KeyboardControls() {
   this.actions = {};
   this.keyCodes = {};
   this.active = false;
   this._loop = null;
 }
 
-GameControls.prototype.createAction = function(key, cb) {
+KeyboardControls.prototype.createAction = function(key, cb) {
   this.actions[key] = cb;
 };
 
-GameControls.prototype.startControls = function() {
+KeyboardControls.prototype.start = function() {
 
   $(window).on('keydown', function(event) {
     this.keyCodes[event.keyCode] = (event.type == 'keydown');
@@ -35,6 +35,6 @@ GameControls.prototype.startControls = function() {
   }.bind(this), 1);
 };
 
-GameControls.prototype.kill = function(){
+KeyboardControls.prototype.kill = function(){
   window.clearInterval(this._loop);
 };
