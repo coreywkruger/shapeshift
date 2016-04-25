@@ -14,7 +14,7 @@ WORKDIR /opt/shapeshift
 
 ARG GAMEROOM_HOST=192.168.99.100
 
-RUN echo "GAMEROOM_HOST="$GAMEROOM_HOST > config/production.js
+RUN echo GAMEROOM_HOST=\"$GAMEROOM_HOST\" > config/production.js
 RUN ./node_modules/.bin/gulp dist
 RUN chmod u+x entrypoint.sh
 
