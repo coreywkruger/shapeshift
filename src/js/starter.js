@@ -84,7 +84,9 @@ function init() {
 
   var entities = {};
   // connect to server and claim name/id
-  var ws = new GameWebsocket('ws://localhost:3334/register'+'?id='+id, id, function(){
+  var host = 'ec2-52-33-37-182.us-west-2.compute.amazonaws.com';
+
+  var ws = new GameWebsocket('ws://'+host+':3334/register'+'?id='+id, id, function(){
     ws.sendMessage({
       message: 'entering',
       id: id
