@@ -16,7 +16,10 @@
     "url": "https://gitlab.com/coreywkruger/shapeshift/issues"
   },
   "homepage": "https://gitlab.com/coreywkruger/shapeshift#README",
-  "dependencies": {},
+  "dependencies": {
+    "jquery": "^2.2.3",
+    "three": "^0.76.1"
+  },
   "devDependencies": {
     "connect": "^2.14.5",
     "gulp": "^3.9.0",
