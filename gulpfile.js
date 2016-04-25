@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var concat = require('gulp-concat');
 var connect = require('connect');
 var http = require('http');
+var argv = require('yargs').argv;
 
 var jsDestination = "dist/js";
 var cssDestination = "dist/css";
@@ -16,12 +17,11 @@ gulp.task('serve', function() {
   http.createServer(app).listen(4001);
 });
 
-// Build JavaScript files.
-// Corey's stuff
 gulp.task('js', function() {
   return gulp.src([
       'node_modules/three/three.js',
       'node_modules/jquery/dist/jquery.min.js',
+      'config/'+(argv.gameroom_host!=='localhost' ? 'production' : 'development')+'.js',
       'src/js/**/*.js'
     ])
     .pipe(concat('all.min.js'))
